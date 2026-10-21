@@ -1,0 +1,103 @@
+@model List<_368_CIE_2.Models.Post>
+
+@{
+    // Set the browser tab title.
+    ViewData["Title"] = "API Posts";
+}
+
+<!-- Main container for the API posts page. -->
+<div class="container py-5">
+
+    <!-- Page heading. -->
+    <div class="text-center mb-5">
+
+        <!-- Main page title. -->
+        <h1 class="display-5 fw-bold">
+            API Posts
+        </h1>
+
+        <!-- Explain the purpose of this page. -->
+        <p class="text-muted">
+            Posts retrieved asynchronously from JSONPlaceholder.
+        </p>
+
+    </div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+        <!-- Responsive table container. -->
+        <div class="table-responsive shadow-sm">
+
+            <!-- Posts table. -->
+            <table class="table table-bordered table-hover align-middle mb-0">
+
+                <!-- Table heading. -->
+                <thead class="table-dark">
+
+                    <tr>
+
+                        <!-- Post ID column. -->
+                        <th style="width: 120px;">
+                            Post ID
+                        </th>
+
+                        <!-- Post title column. -->
+                        <th>
+                            Post Title
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <!-- Table data. -->
+                <tbody>
+
+                    @foreach (var post in Model)
+                    {
+                        <!-- Display one row for each API post. -->
+                        <tr>
+
+                            <!-- Display the post ID. -->
+                            <td class="fw-bold">
+                                @post.Id
+                            </td>
+
+                            <!-- Display the post title. -->
+                            <td>
+                                @post.Title
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+    }
+    else
+    {
+        <!-- Display this message when the API does not return posts. -->
+        <div class="alert alert-warning text-center">
+
+            No posts were received from the API.
+
+        </div>
+    }
+
+    <!-- Explain the asynchronous API concepts demonstrated here. -->
+    <div class="alert alert-info mt-4">
+
+        <strong>Practical Concepts:</strong>
+
+        HttpClient,
+        asynchronous HTTP request,
+        async/await,
+        JSON deserialization,
+        MVC Controller and Razor View.
+
+    </div>
+
+</div>

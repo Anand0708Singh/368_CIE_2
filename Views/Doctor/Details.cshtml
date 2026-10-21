@@ -1,0 +1,164 @@
+@model _368_CIE_2.Models.Doctor
+
+@{
+    // Set the browser page title.
+    ViewData["Title"] = "Doctor Details";
+
+    // Calculate the total consultation charge using the extension method.
+    var totalCharge = Model.CalculateTotalCharge();
+}
+
+<!-- Main doctor details container. -->
+<div class="container py-5">
+
+    <!-- Center the doctor details card. -->
+    <div class="row justify-content-center">
+
+        <!-- Limit the width of the details card. -->
+        <div class="col-md-8 col-lg-6">
+
+            <!-- Doctor details card. -->
+            <div class="card shadow border-0">
+
+                <!-- Card header. -->
+                <div class="card-header text-white text-center py-4"
+                     style="background: linear-gradient(135deg, #087f8c, #075985);">
+
+                    <!-- Doctor heading. -->
+                    <h2 class="mb-1">
+                        @Model.DoctorName
+                    </h2>
+
+                    <!-- Doctor specialization. -->
+                    <p class="mb-0">
+                        @Model.Specialization
+                    </p>
+
+                </div>
+
+                <!-- Doctor information section. -->
+                <div class="card-body p-4">
+
+                    <!-- Doctor ID row. -->
+                    <div class="d-flex justify-content-between border-bottom py-3">
+
+                        <strong>Doctor ID</strong>
+
+                        <span>
+                            @Model.DoctorId
+                        </span>
+
+                    </div>
+
+                    <!-- Doctor name row. -->
+                    <div class="d-flex justify-content-between border-bottom py-3">
+
+                        <strong>Doctor Name</strong>
+
+                        <span>
+                            @Model.DoctorName
+                        </span>
+
+                    </div>
+
+                    <!-- Specialization row. -->
+                    <div class="d-flex justify-content-between border-bottom py-3">
+
+                        <strong>Specialization</strong>
+
+                        <span>
+                            @Model.Specialization
+                        </span>
+
+                    </div>
+
+                    <!-- Experience row. -->
+                    <div class="d-flex justify-content-between border-bottom py-3">
+
+                        <strong>Experience</strong>
+
+                        <span>
+                            @Model.Experience years
+                        </span>
+
+                    </div>
+
+                    <!-- Consultation fee row. -->
+                    <div class="d-flex justify-content-between border-bottom py-3">
+
+                        <strong>Consultation Fee</strong>
+
+                        <span>
+                            ₹@Model.ConsultationFee
+                        </span>
+
+                    </div>
+
+                    <!-- Fixed service charge row. -->
+                    <div class="d-flex justify-content-between border-bottom py-3">
+
+                        <strong>Service Charge</strong>
+
+                        <span>
+                            ₹100
+                        </span>
+
+                    </div>
+
+                    <!-- Total consultation charge row. -->
+                    <div class="d-flex justify-content-between py-3">
+
+                        <strong>Total Consultation Charge</strong>
+
+                        <!-- The total is calculated using CalculateTotalCharge(). -->
+                        <span class="text-success fw-bold fs-5">
+                            ₹@totalCharge
+                        </span>
+
+                    </div>
+
+                    <!-- Explanation of the extension method. -->
+                    <div class="alert alert-info mt-3">
+
+                        <strong>Calculation:</strong>
+
+                        ₹@Model.ConsultationFee consultation fee
+                        + ₹100 service charge
+                        =
+                        <strong>₹@totalCharge</strong>
+
+                    </div>
+
+                    <!-- Action buttons. -->
+                    <div class="d-grid gap-2 mt-4">
+
+                        <!-- Open the appointment form for this doctor. -->
+                        <a class="btn btn-primary"
+                           asp-controller="Doctor"
+                           asp-action="Appointment"
+                           asp-route-doctorId="@Model.DoctorId">
+
+                            Book Appointment
+
+                        </a>
+
+                        <!-- Return to the doctor list. -->
+                        <a class="btn btn-outline-secondary"
+                           asp-controller="Doctor"
+                           asp-action="Index">
+
+                            Back to Doctors
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

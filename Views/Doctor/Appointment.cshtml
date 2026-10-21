@@ -1,0 +1,99 @@
+@model _368_CIE_2.Models.Doctor
+
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+
+<div class="container py-5">
+
+    <!-- Page heading. -->
+    <div class="text-center mb-4">
+        <h1>Book Appointment</h1>
+        <p class="text-muted">
+            Schedule an appointment with your selected doctor.
+        </p>
+    </div>
+
+    <!-- Appointment form sends the submitted data to the POST Appointment action. -->
+    <form asp-controller="Doctor"
+          asp-action="Appointment"
+          method="post"
+          class="appointment-form">
+
+        <!-- Hidden field carries DoctorId to the POST action. -->
+        <input type="hidden"
+               name="DoctorId"
+               value="@Model.DoctorId" />
+
+        <!-- Selected doctor information. -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+
+                <h3>@Model.DoctorName</h3>
+
+                <p>
+                    <strong>Doctor ID:</strong>
+                    @Model.DoctorId
+                </p>
+
+                <p>
+                    <strong>Specialization:</strong>
+                    @Model.Specialization
+                </p>
+
+                <p>
+                    <strong>Experience:</strong>
+                    @Model.Experience years
+                </p>
+
+                <p>
+                    <strong>Consultation Fee:</strong>
+                    ₹@Model.ConsultationFee
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Patient name is entered by the patient. -->
+        <div class="mb-3">
+            <label for="PatientName" class="form-label">
+                Patient Name
+            </label>
+
+            <input type="text"
+                   id="PatientName"
+                   name="PatientName"
+                   class="form-control"
+                   placeholder="Enter patient name"
+                   required />
+        </div>
+
+        <!-- Appointment date and time. -->
+        <div class="mb-3">
+            <label for="AppointmentDate" class="form-label">
+                Appointment Date
+            </label>
+
+            <input type="datetime-local"
+                   id="AppointmentDate"
+                   name="AppointmentDate"
+                   class="form-control"
+                   required />
+        </div>
+
+        <!-- Submit appointment. -->
+        <button type="submit" class="btn btn-primary">
+            Submit Appointment
+        </button>
+
+        <!-- Return to doctor details. -->
+        <a asp-controller="Doctor"
+           asp-action="Details"
+           asp-route-doctorId="@Model.DoctorId"
+           class="btn btn-secondary ms-2">
+            Back
+        </a>
+
+    </form>
+
+</div>

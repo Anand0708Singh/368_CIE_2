@@ -1,0 +1,274 @@
+@model List<_368_CIE_2.Models.Appointment>
+
+@{
+    // Set the browser tab title.
+    ViewData["Title"] = "Appointments";
+
+    // Get today's date from the controller.
+    var today = (DateTime)ViewBag.Today;
+
+    // Select appointments scheduled for today.
+    var todayAppointments = Model
+        .Where(a => a.AppointmentDate.Date == today)
+        .OrderBy(a => a.AppointmentDate)
+        .ToList();
+
+    // Select appointments scheduled after today.
+    var upcomingAppointments = Model
+        .Where(a => a.AppointmentDate.Date > today)
+        .OrderBy(a => a.AppointmentDate)
+        .ToList();
+}
+
+<div class="container py-5">
+
+    <!-- Page heading -->
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Hospital Appointments
+        </h1>
+
+        <p class="text-muted">
+            View today's and upcoming patient appointments.
+        </p>
+
+    </div>
+
+
+    <!-- TODAY / LIVE APPOINTMENTS -->
+    <div class="mb-5">
+
+        <div class="d-flex align-items-center mb-3">
+
+            <span class="badge bg-danger me-2">
+                LIVE
+            </span>
+
+            <h3 class="mb-0">
+                Today's Appointments
+            </h3>
+
+        </div>
+
+
+        @if (todayAppointments.Any())
+        {
+            <!-- Display today's appointments in chronological order. -->
+            @foreach (var appointment in todayAppointments)
+            {
+                <div class="card shadow-sm border-0 mb-3">
+
+                    <div class="card-body">
+
+                        <div class="row align-items-center">
+
+                            <!-- Appointment time/date -->
+                            <div class="col-md-2 text-center">
+
+                                <div class="fw-bold text-danger">
+                                    TODAY
+                                </div>
+
+                                <small>
+                                    @appointment.AppointmentDate.ToString("dd MMM")
+                                </small>
+
+                            </div>
+
+
+                            <!-- Patient information -->
+                            <div class="col-md-3">
+
+                                <h5 class="mb-1">
+                                    @appointment.PatientName
+                                </h5>
+
+                                <small class="text-muted">
+                                    Patient
+                                </small>
+
+                            </div>
+
+
+                            <!-- Doctor information -->
+                            <div class="col-md-3">
+
+                                <strong>
+                                    @appointment.DoctorName
+                                </strong>
+
+                                <br />
+
+                                <small class="text-muted">
+                                    @appointment.Specialization
+                                </small>
+
+                            </div>
+
+
+                            <!-- Doctor ID -->
+                            <div class="col-md-2">
+
+                                <span class="badge bg-primary">
+                                    Doctor ID:
+                                    @appointment.DoctorId
+                                </span>
+
+                            </div>
+
+
+                            <!-- Status -->
+                            <div class="col-md-2 text-md-end mt-3 mt-md-0">
+
+                                <span class="badge bg-danger">
+                                    LIVE / TODAY
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Message shown when there are no appointments today. -->
+            <div class="alert alert-light border">
+
+                No appointments scheduled for today.
+
+            </div>
+        }
+
+    </div>
+
+
+    <!-- UPCOMING APPOINTMENTS -->
+    <div>
+
+        <div class="d-flex align-items-center mb-3">
+
+            <span class="badge bg-primary me-2">
+                UPCOMING
+            </span>
+
+            <h3 class="mb-0">
+                Upcoming Appointments
+            </h3>
+
+        </div>
+
+
+        @if (upcomingAppointments.Any())
+        {
+            <!-- Display future appointments in date order. -->
+            @foreach (var appointment in upcomingAppointments)
+            {
+                <div class="card shadow-sm border-0 mb-3">
+
+                    <div class="card-body">
+
+                        <div class="row align-items-center">
+
+                            <!-- Appointment date -->
+                            <div class="col-md-2 text-center">
+
+                                <div class="fw-bold text-primary">
+                                    @appointment.AppointmentDate.ToString("dd")
+                                </div>
+
+                                <small>
+                                    @appointment.AppointmentDate.ToString("MMM yyyy")
+                                </small>
+
+                            </div>
+
+
+                            <!-- Patient information -->
+                            <div class="col-md-3">
+
+                                <h5 class="mb-1">
+                                    @appointment.PatientName
+                                </h5>
+
+                                <small class="text-muted">
+                                    Patient
+                                </small>
+
+                            </div>
+
+
+                            <!-- Doctor information -->
+                            <div class="col-md-3">
+
+                                <strong>
+                                    @appointment.DoctorName
+                                </strong>
+
+                                <br />
+
+                                <small class="text-muted">
+                                    @appointment.Specialization
+                                </small>
+
+                            </div>
+
+
+                            <!-- Doctor ID -->
+                            <div class="col-md-2">
+
+                                <span class="badge bg-secondary">
+                                    Doctor ID:
+                                    @appointment.DoctorId
+                                </span>
+
+                            </div>
+
+
+                            <!-- Status -->
+                            <div class="col-md-2 text-md-end mt-3 mt-md-0">
+
+                                <span class="badge bg-primary">
+                                    UPCOMING
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+        else
+        {
+            <!-- Message shown when no future appointments exist. -->
+            <div class="alert alert-light border">
+
+                No upcoming appointments.
+
+            </div>
+        }
+
+    </div>
+
+
+    <!-- Back button -->
+    <div class="text-center mt-5">
+
+        <a asp-controller="Doctor"
+           asp-action="Index"
+           class="btn btn-primary">
+
+            ← Back to Doctors
+
+        </a>
+
+    </div>
+
+</div>
